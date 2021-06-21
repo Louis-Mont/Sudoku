@@ -1,21 +1,11 @@
 import numpy as np
 import random
-
-
-def getpos(n):
-    return (n // 3) * 3
-
-
-def getsq(arr, x, y):
-    return arr[getpos(x):getpos(x) + 3, getpos(y):getpos(y) + 3]
-
+from Solver.Sudoku import Sudoku
 
 if __name__ == '__main__':
-    arr: np.ndarray = np.arange(81).reshape(9, 9)
-    """"# print(arr)
-    for c in range(10):
-        x = random.randint(0, 8)
-        y = random.randint(0, 8)
-        print(arr)
-        print(arr[x, y])
-        print(getsq(arr, x, y))"""
+    p = [random.sample(range(10), 9) for j in range(0, 9)]
+    print(p)
+    arr = np.array(p)
+    print(arr)
+    sv = Sudoku(arr)
+    print(sv.base)
