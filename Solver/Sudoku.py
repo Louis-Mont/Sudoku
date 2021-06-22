@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import ndarray
+from Solver.utils import tryremove, sq_o
 
 
 class Sudoku:
@@ -24,31 +25,18 @@ class Sudoku:
     def h_sols(self, x):
         all_sol = {i for i in range(1, 10)}
         for y in self.base[x]:
-            self.tryremove(all_sol, y)
+            tryremove(all_sol, y)
         return all_sol
 
     def v_sols(self, y):
         all_sol = {i for i in range(1, 10)}
         for x in self.base[:, y]:
-            self.tryremove(all_sol, x)
+            tryremove(all_sol, x)
         return all_sol
-
-    def sq_o(self, n):
-        return (n // 3) * 3
 
     def sq_sol(self, x, y):
         all_sol = {i for i in range(1, 10)}
-        for sq_x in self.base[self.sq_o(x):self.sq_o(x) + 3, self.sq_o(y): self.sq_o(y) + 3]:
+        for sq_x in self.base[sq_o(x):sq_o(x) + 3, sq_o(y): sq_o(y) + 3]:
             for sq_y in sq_x:
-                self.tryremove(all_sol, sq_y)
+                tryremove(all_sol, sq_y)
         return all_sol
-
-    def tryremove(self, l, v):
-        try:
-            l.remove(v)
-        except ValueError:
-            pass
-        except KeyError:
-            # TODO : Not Good Sudoku
-            pass
-        return l
