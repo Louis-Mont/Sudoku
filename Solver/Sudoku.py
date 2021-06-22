@@ -12,15 +12,13 @@ class Sudoku:
         """
         self.base = base
         self.sols = {}
-        x = 0
-        for r in base:
+        for x, r in enumerate(base):
             for y in range(len(r)):
                 s = self.h_sols(x).intersection(self.v_sols(y)).intersection(self.sq_sol(x, y))
                 if len(s) == 1:
                     base[x, y] = list(s)[0]
                 else:
                     self.sols[x, y] = s
-            x += 1
 
     def h_sols(self, x):
         all_sol = {i for i in range(1, 10)}
