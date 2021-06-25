@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import ndarray
-from Solver.utils import tryremove, sq_o
+from Core.utils import tryremove, sq_o
 
 
 class Sudoku:

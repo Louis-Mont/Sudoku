@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from Solver.Sudoku import Sudoku
+from Core.Sudoku import Sudoku
 
 if __name__ == '__main__':
     p = [random.sample(range(10), 9) for j in range(0, 9)]
