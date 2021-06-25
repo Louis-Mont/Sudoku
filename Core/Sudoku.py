@@ -19,8 +19,7 @@ class Sudoku:
         while x < len(self.base):
             for y in range(len(self.base[x])):
                 try:
-                    ns = NakedSingle("ns")
-                    ns.sudoku = self
+                    ns = NakedSingle(self)
                     c_sol = ns.get_sol(x, y)
                     pos = random.randint(0, len(c_sol) - 1)
                     self.base[x, y] = list(c_sol)[pos]
