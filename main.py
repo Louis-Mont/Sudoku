@@ -14,28 +14,34 @@ if __name__ == '__main__':
             [0, 0, 4, 0, 8, 0, 0, 0, 9],
             [0, 6, 0, 4, 0, 0, 0, 0, 0],
             [9, 1, 0, 0, 6, 0, 0, 0, 2]]
+    exhs = np.array(exhs)
 
-    grid = [[0 for i in range(9)] for j in range(0, 9)]
+    """grid = [[0 for i in range(9)] for j in range(0, 9)]
 
-    arr = np.array(exhs)
-    sdk = Sudoku(arr)
+    arr = np.array(grid)
+    sdk_r = Sudoku(arr)
+    sdk_r.generate_complete_sudoku()
+    sdk_r.drill_sudoku(40)"""
 
-    # sdk.generate_complete_sudoku()
-    # print(sdk.base)
+    sdk_hs = Sudoku(exhs)
 
-    # sdk.drill_sudoku(40)
+    sdk = sdk_hs
     sdkbase = sdk.base.copy()
     print(sdkbase)
     print()
+
     ns = NakedSingle(sdk)
     ns.solve()
     ns.set_one_sol()
-    sdkns = sdk.base
+    sdkns = sdk.base.copy()
+    print(sdkns)
     print((sdkbase == sdkns).all())
+    print()
+
     hs = HiddenSingle(sdk)
     hs.solve()
     hs.set_one_sol()
+    sdkhs = sdk.base.copy()
+    print(sdkhs)
+    print((sdkns == sdkhs).all())
     print()
-    print((sdkns == sdk.base).all())
-
-    print(sdk.base)
