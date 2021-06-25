@@ -13,11 +13,12 @@ class NakedSingle(SudokuSolver, ABC):
         sudoku = self.sudoku
         for x, r in enumerate(sudoku.base):
             for y in range(len(r)):
-                s = self.get_sol(x, y)
-                if len(s) == 1:
-                    sudoku.base[x, y] = list(s)[0]
-                else:
-                    sudoku.sols[x, y] = s
+                if sudoku.base[x, y] == 0:
+                    s = self.get_sol(x, y)
+                    if len(s) == 1:
+                        sudoku.base[x, y] = list(s)[0]
+                    else:
+                        sudoku.sols[x, y] = s
 
     def h_sols(self, x):
         all_sol = {i for i in range(1, 10)}
