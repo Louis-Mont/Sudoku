@@ -21,19 +21,19 @@ class NakedSingle(SudokuSolver, ABC):
                         sudoku.sols[x, y] = s
 
     def h_sols(self, x):
-        all_sol = {i for i in range(1, 10)}
+        all_sol = self.get_poss()
         for y in self.sudoku.base[x]:
             tryremove(all_sol, y)
         return all_sol
 
     def v_sols(self, y):
-        all_sol = {i for i in range(1, 10)}
+        all_sol = self.get_poss()
         for x in self.sudoku.base[:, y]:
             tryremove(all_sol, x)
         return all_sol
 
     def sq_sol(self, x, y):
-        all_sol = {i for i in range(1, 10)}
+        all_sol = self.get_poss()
         for sq_x in self.sudoku.base[sq_o(x):sq_o(x) + 3, sq_o(y): sq_o(y) + 3]:
             for sq_y in sq_x:
                 tryremove(all_sol, sq_y)

@@ -16,19 +16,19 @@ class HiddenSingle(SudokuSolver):
                         sudoku.base[x, y] = list(s)[0]
 
     def h_poss(self, x):
-        all_poss = set(range(1, 10))
+        all_poss = self.get_poss()
         for y, c in enumerate(self.sudoku.base[x]):
             self.rm_poss(x, y, all_poss)
         return all_poss
 
     def v_poss(self, y):
-        all_poss = set(range(1, 10))
+        all_poss = self.get_poss()
         for x, r in enumerate(self.sudoku.base[:, y]):
             self.rm_poss(x, y, all_poss)
         return all_poss
 
     def sq_poss(self, x, y):
-        all_poss = set(range(1, 10))
+        all_poss = self.get_poss()
         x0 = sq_o(x)
         y0 = sq_o(y)
         for r, sq_x in enumerate(self.sudoku.base[x0:x0 + 3, y0:y0 + 3]):

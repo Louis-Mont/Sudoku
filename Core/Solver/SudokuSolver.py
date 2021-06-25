@@ -6,6 +6,9 @@ class SudokuSolver(ABC):
         self.name = name
         self.sudoku = sudoku
 
+    def get_poss(self):
+        return set(range(1, 10))
+
     @abstractmethod
     def solve(self):
         pass
