@@ -29,10 +29,12 @@ if __name__ == '__main__':
     print()
     ns = NakedSingle(sdk)
     ns.solve()
+    ns.set_one_sol()
     sdkns = sdk.base
     print((sdkbase == sdkns).all())
     hs = HiddenSingle(sdk)
     hs.solve()
+    hs.set_one_sol()
     print()
     print((sdkns == sdk.base).all())
 

@@ -16,7 +16,7 @@ class SudokuSolver(ABC):
         self.set_one_sol()
 
     def set_one_sol(self):
-        for k, v in self.sudoku.sols:
+        for k, v in self.sudoku.sols.items():
             if len(v) == 1:
                 self.sudoku.base[k] = list(v)[0]
 
