@@ -1,7 +1,6 @@
 import numpy as np
 from numpy import ndarray
-from Core.utils import tryremove, sq_o
-
+import random
 
 class Sudoku:
 
@@ -13,42 +12,26 @@ class Sudoku:
         self.base = base
         self.sols = {}
 
-    def h_sols(self, x):
-        all_sol = set(range(1, 10))
-        for y in self.base[x]:
-            tryremove(all_sol, y)
-        return all_sol
 
-    def v_sols(self, y):
-        all_sol = set(range(1, 10))
-        for x in self.base[:, y]:
-            tryremove(all_sol, x)
-        return all_sol
+    def generateCompleteSudoku(self):
+        x = 0
+        while x < len(self.base):
+            for y in range(len(self.base[x])):
+                try:
+                    cSol = self.h_sols(x).intersection(self.v_sols(y)).intersection(self.sq_sol(x, y))
+                    pos = random.randint(0, len(cSol) - 1)
+                    self.base[x, y] = list(cSol)[pos]
+                except:
+                    self.base[x] = [0 for i in range(9)]
+                    x -= 1
+                    break
+            x += 1
 
-    def sq_sols(self, x, y):
-        all_sol = set(range(1, 10))
-        for sq_x in self.base[sq_o(x):sq_o(x) + 3, sq_o(y): sq_o(y) + 3]:
-            for sq_y in sq_x:
-                tryremove(all_sol, sq_y)
-        return all_sol
-
-    def solve(self):
-        solved = False
-        while not solved:
-            blanks = np.count_nonzero(self.base == 0)
-            solved = True
-            for x, r in enumerate(self.base):
-                for y in range(len(r)):
-                    if self.base[x, y] == 0:
-                        solved = False
-                        s = self.h_sols(x).intersection(self.v_sols(y)).intersection(self.sq_sols(x, y))
-                        if len(s) == 1:
-                            self.base[x, y] = list(s)[0]
-                            try:
-                                self.sols.pop((x, y))
-                            except KeyError:
-                                pass
-                        else:
-                            self.sols[x, y] = s
-            if blanks == np.count_nonzero(self.base == 0):
-                return
+    def drillSudoku(self, c):
+        i = 0
+        while i < c:
+            x = random.randint(0, len(self.base) - 1)
+            y = random.randint(0, len(self.base[x]) - 1)
+            if self.base[x,y] > 0:
+                self.base[x,y] = 0
+                i += 1
