@@ -35,7 +35,7 @@ class HiddenSingle(SudokuSolver):
         y0 = sq_o(yb)
         for x, r in enumerate(self.sudoku.base[x0:x0 + 3, y0:y0 + 3]):
             for y, c in enumerate(r):
-                if xb != x or yb != y:
+                if xb != x0 + x or yb != y0 + y:
                     self.rm_poss(x0 + x, y0 + y, all_poss)
         return all_poss
 
