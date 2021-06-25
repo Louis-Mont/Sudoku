@@ -12,7 +12,7 @@ class Sudoku:
         :type base: ndarray
         """
         self.base = base
-        self.sols = {}
+        self.sols: dict[tuple[int, int], set[int]] = {}
 
     def generate_complete_sudoku(self):
         x = 0
