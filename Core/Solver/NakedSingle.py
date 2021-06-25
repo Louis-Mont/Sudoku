@@ -5,11 +5,15 @@ from Core.utils import tryremove, sq_o
 
 
 class NakedSingle(SudokuSolver, ABC):
-    def solve(self, sudoku):
-        self.sudoku = sudoku
+
+    def __init__(self, sudoku):
+        super().__init__("Naked Single", sudoku)
+
+    def solve(self):
+        sudoku = self.sudoku
         for x, r in enumerate(sudoku.base):
             for y in range(len(r)):
-                s = self.h_sols(x).intersection(self.v_sols(y)).intersection(self.sq_sol(x, y))
+                s = self.get_sol(x, y)
                 if len(s) == 1:
                     sudoku.base[x, y] = list(s)[0]
                 else:
@@ -33,3 +37,6 @@ class NakedSingle(SudokuSolver, ABC):
             for sq_y in sq_x:
                 tryremove(all_sol, sq_y)
         return all_sol
+
+    def get_sol(self, x, y):
+        return self.h_sols(x).intersection(self.v_sols(y)).intersection(self.sq_sol(x, y))

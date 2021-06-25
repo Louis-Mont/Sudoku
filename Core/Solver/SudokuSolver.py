@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
-from Core.Sudoku import Sudoku
 
 
 class SudokuSolver(ABC):
-    def __init__(self, name):
+    def __init__(self, name, sudoku=None):
         self.name = name
-        self.sudoku = None
+        self.sudoku = sudoku
 
     @abstractmethod
-    def solve(self, sudoku):
+    def solve(self):
         pass

@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from Solver.Sudoku import Sudoku
+from Core.Sudoku import Sudoku
 
 if __name__ == '__main__':
     grid = [[0 for i in range(9)] for j in range(0, 9)]
@@ -8,10 +8,8 @@ if __name__ == '__main__':
     arr = np.array(grid)
     sdk = Sudoku(arr)
 
-    sdk.generateCompleteSudoku()
-    #print(sdk.base)
+    sdk.generate_complete_sudoku()
+    # print(sdk.base)
 
-    sdk.drillSudoku(40)
+    sdk.drill_sudoku(40)
     print(sdk.base)
-
-    
