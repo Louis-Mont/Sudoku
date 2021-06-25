@@ -37,6 +37,13 @@ class HiddenSingle(SudokuSolver):
         return all_poss
 
     def rm_poss(self, x, y, lp):
+        """
+        Removes the possibilities comprised either in the case's solutions or in the case, if already filled
+        :type x: int
+        :type y: int
+        :param lp: The possibilities left when you're calling the function
+        :type lp: set[int]
+        """
         try:
             for s in self.sudoku.sols[x, y]:
                 tryremove(lp, s)
