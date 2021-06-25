@@ -29,36 +29,6 @@ class Sudoku:
                     break
             x += 1
 
-    def generate_complete_sudoku2(self):
-        x = 0
-        while x < len(self.base):
-            for y in range(len(self.base[x])):
-                try:
-                    ns = NakedSingle(self)
-                    c_sol = ns.get_sol(x, y)
-                    pos = random.randint(0, len(c_sol) - 1)
-                    self.base[x, y] = list(c_sol)[pos]
-                except ValueError:
-                    self.base[x] = [0 for i in range(9)]
-                    x -= 1
-                    break
-            x += 1
-
-    def generate_complete_sudoku3(self):
-        for n in range(1, len(self.base)):
-            x = 0
-            while x < len(self.base):
-                y = 0
-                row_sols = []
-                while y < len(self.base[x]):
-                    if self.base[x,y] == 0:
-                        row_sols.append(y)
-                    y += 1
-                pos = random.randint(0, len(row_sols) - 1)
-
-                self.base[x, pos] = n
-                x += 1
-
     def drill_sudoku(self, c):
         i = 0
         while i < c and not self.is_sudoku_empty():
@@ -85,8 +55,6 @@ class Sudoku:
                 self.base[x, y] = 0
                 c_sol = ns.get_sol(x, y)
                 if val != 0 and not (list(c_sol).count(val) > 0):
-                    print(c_sol)
-                    print(val)
                     is_valid = False
                 self.base[x, y] = val
 
