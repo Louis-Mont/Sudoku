@@ -1,10 +1,8 @@
-from abc import ABC
-
 from Core.Solver.SudokuSolver import SudokuSolver
 from Core.utils import tryremove, sq_o
 
 
-class NakedSingle(SudokuSolver, ABC):
+class NakedSingle(SudokuSolver):
 
     def __init__(self, sudoku):
         super().__init__("Naked Single", sudoku)
@@ -14,11 +12,7 @@ class NakedSingle(SudokuSolver, ABC):
         for x, r in enumerate(sudoku.base):
             for y in range(len(r)):
                 if sudoku.base[x, y] == 0:
-                    s = self.get_sol(x, y)
-                    if len(s) == 1:
-                        sudoku.base[x, y] = list(s)[0]
-                    else:
-                        sudoku.sols[x, y] = s
+                    sudoku.sols[x, y] = self.get_sol(x, y)
 
     def h_sols(self, x):
         all_sol = self.get_poss()

@@ -20,10 +20,10 @@ if __name__ == '__main__':
     arr = np.array(exhs)
     sdk = Sudoku(arr)
 
-    sdk.generate_complete_sudoku()
+    # sdk.generate_complete_sudoku()
     # print(sdk.base)
 
-    sdk.drill_sudoku(40)
+    # sdk.drill_sudoku(40)
     sdkbase = sdk.base.copy()
     print(sdkbase)
     print()
