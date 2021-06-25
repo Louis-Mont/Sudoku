@@ -21,7 +21,7 @@ def verification(row, column, number):
         if tab[i][column] == number:
             return False
 
-    # Vérification si le nombre est valide dans sa case
+    # Vérification si le nombre est valide dans sa sous-grille
     x0 = (column // 3) * 3
     y0 = (row // 3) * 3
     for i in range(0,3):
@@ -36,11 +36,11 @@ def solve():
         for column in range(0,9):
             if tab[row][column] == 0:
                 for number in range(1,10):
-                    if possible(row, column, number):
+                    if verification(row, column, number):
                         tab[row][column] = number
                         solve()
                         tab[row][column] = 0
                 return
     print(np.matrix(tab))
-
+    print()
 solve()
