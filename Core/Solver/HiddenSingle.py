@@ -18,21 +18,13 @@ class HiddenSingle(SudokuSolver):
     def h_poss(self, x):
         all_poss = set(range(1, 10))
         for y, c in enumerate(self.sudoku.base[x]):
-            try:
-                for s in self.sudoku.sols[x, y]:
-                    tryremove(all_poss, s)
-            except KeyError:
-                tryremove(all_poss, self.sudoku.base[x, y])
+            self.rm_poss(x, y, all_poss)
         return all_poss
 
     def v_poss(self, y):
         all_poss = set(range(1, 10))
         for x, r in enumerate(self.sudoku.base[:, y]):
-            try:
-                for s in self.sudoku.sols[x, y]:
-                    tryremove(all_poss, s)
-            except KeyError:
-                tryremove(all_poss, self.sudoku.base[x, y])
+            self.rm_poss(x, y, all_poss)
         return all_poss
 
     def sq_poss(self, x, y):
@@ -41,11 +33,7 @@ class HiddenSingle(SudokuSolver):
         y0 = sq_o(y)
         for r, sq_x in enumerate(self.sudoku.base[x0:x0 + 3, y0:y0 + 3]):
             for c, sq_y in enumerate(sq_x):
-                try:
-                    for v in self.sudoku.sols[x0 + r, y0 + c]:
-                        tryremove(all_poss, v)
-                except KeyError:
-                    tryremove(all_poss, self.sudoku.base[x0 + r, y0 + c])
+                self.rm_poss(x0 + r, y0 + c, all_poss)
         return all_poss
 
     def rm_poss(self, x, y, lp):
