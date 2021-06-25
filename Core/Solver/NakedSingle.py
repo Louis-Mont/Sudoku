@@ -10,7 +10,7 @@ class NakedSingle(SudokuSolver):
     def solve(self):
         sudoku = self.sudoku
         for x, r in enumerate(sudoku.base):
-            for y in range(len(r)):
+            for y, c in enumerate(r):
                 if sudoku.base[x, y] == 0:
                     sudoku.sols[x, y] = self.get_sol(x, y)
 
