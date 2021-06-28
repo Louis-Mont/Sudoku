@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from Core.utils import tryremove
 
 
 class SudokuSolver(ABC):
@@ -22,6 +23,21 @@ class SudokuSolver(ABC):
 
     def get_poss(self):
         return set(range(1, 10))
+
+    def rm_poss(self, x, y, lp):
+        """
+        Removes the possibilities comprised either in the case's solutions or in the case, if already filled
+        :type x: int
+        :type y: int
+        :param lp: The possibilities left when you're calling the function
+        :type lp: set[int]
+        """
+        try:
+            for s in self.sudoku.sols[x, y]:
+                tryremove(lp, s)
+        except KeyError:
+            tryremove(lp, self.sudoku.base[x, y])
+        return lp
 
     @abstractmethod
     def solve(self):
