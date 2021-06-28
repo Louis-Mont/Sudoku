@@ -28,7 +28,6 @@ class TestNakedPairs(TestCase):
         NakedSingle(sdk).solve()
 
         sol = sdk.sols.copy()
-        base = sdk.base.copy()
 
         master_solver(self.solvers, sdk)
 
