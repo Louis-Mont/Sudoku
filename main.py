@@ -16,13 +16,6 @@ if __name__ == '__main__':
             [9, 1, 0, 0, 6, 0, 0, 0, 2]]
     exhs = np.array(exhs)
 
-    """grid = [[0 for i in range(9)] for j in range(0, 9)]
-
-    arr = np.array(grid)
-    sdk_r = Sudoku(arr)
-    sdk_r.generate_complete_sudoku()
-    sdk_r.drill_sudoku(40)"""
-
     sdk_hs = Sudoku(exhs)
 
     sdk = sdk_hs

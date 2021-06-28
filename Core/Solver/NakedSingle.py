@@ -34,4 +34,4 @@ class NakedSingle(SudokuSolver):
         return all_sol
 
     def get_sol(self, x, y):
-        return self.h_sols(x).union(self.v_sols(y)).union(self.sq_sol(x, y))
+        return self.h_sols(x).intersection(self.v_sols(y)).intersection(self.sq_sol(x, y))
