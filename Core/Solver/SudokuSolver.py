@@ -2,19 +2,22 @@ from abc import ABC, abstractmethod
 from Core.utils import tryremove
 
 
+def master_solver(solvers, sudoku):
+    """
+    Solve the sudoku, with all the solvers provided, non-instanced
+    :type solvers: list[type[SudokuSolver]]
+    :type sudoku: sdk.Sudoku
+    """
+    for solver in solvers:
+        slv = solver(sudoku)
+        slv.solve()
+        slv.set_one_sol()
+
+
 class SudokuSolver(ABC):
     def __init__(self, name, sudoku=None):
         self.name = name
         self.sudoku = sudoku
-
-    def master_solver(self, solvers):
-        """
-        Solve the sudoku, with all the solvers provided, non-instanced
-        :type solvers: list[type[SudokuSolver]]
-        """
-        for solver in solvers:
-            solver(self.sudoku).solve()
-        self.set_one_sol()
 
     def set_one_sol(self):
         for k, v in self.sudoku.sols.items():
