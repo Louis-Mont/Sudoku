@@ -11,16 +11,16 @@ class NakedPairs(SudokuSolver):
         for x, r in enumerate(sudoku.base):
             for y, c in enumerate(r):
                 if sudoku.base[x, y] == 0:
-                    dict_fp = {
-                        self.h_pair: self.rm_h_pair,
-                        self.v_pair: self.rm_v_pair,
-                        self.sq_pair: self.rm_sq_pair
-                    }
-                    for k, v in dict_fp.items():
+                    pairs = [
+                        (self.h_pair(x, y), self.rm_h_pair),
+                        (self.v_pair(x, y), self.rm_v_pair),
+                        (self.sq_pair(x, y), self.rm_sq_pair)
+                    ]
+                    for pair_v in pairs:
+                        pair = pair_v[0]
                         # False positive error
-                        p = k(x, y)
-                        if p:
-                            v(p[0], p[1])
+                        if pair:
+                            pair_v[1](pair[0], pair[1])
 
     def h_pair(self, xb, yb):
         """
@@ -63,7 +63,7 @@ class NakedPairs(SudokuSolver):
         :type yb: int
         """
         for y, c in enumerate(self.sudoku.base[xb]):
-            if yb != y and self.sudoku.base[xb, y] == 0:
+            if yb != y and self.not_pair(xb, yb, xb, y):
                 rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[xb, y])
 
     def rm_v_pair(self, xb, yb):
@@ -72,7 +72,7 @@ class NakedPairs(SudokuSolver):
         :type yb: int
         """
         for x, r in enumerate(self.sudoku.base[:, yb]):
-            if xb != x and self.sudoku.base[x, yb] == 0:
+            if xb != x and self.not_pair(xb, yb, x, yb):
                 rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[x, yb])
 
     def rm_sq_pair(self, xb, yb):
@@ -83,9 +83,11 @@ class NakedPairs(SudokuSolver):
         x0 = sq_o(xb)
         y0 = sq_o(yb)
         for x, r in enumerate(self.sudoku.base[x0:x0 + 3, y0:y0 + 3]):
+            ax = x0 + x
             for y, c in enumerate(r):
-                if (xb != x0 + x or yb != y0 + y) and self.sudoku.base[x0 + x, y0 + y] == 0:
-                    rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[x0 + x, y0 + y])
+                ay = y0 + y
+                if (xb != ax or yb != ay) and self.not_pair(xb, yb, ax, ay):
+                    rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[ax, ay])
 
     def valid_sol(self, xb, yb, x, y):
         """
@@ -97,5 +99,18 @@ class NakedPairs(SudokuSolver):
         """
         try:
             return len(self.sudoku.sols[x, y]) == 2 and self.sudoku.sols[x, y] == self.sudoku.sols[xb, yb]
+        except KeyError:
+            return False
+
+    def not_pair(self, xb, yb, x, y):
+        """
+        Verifies if the case x, y is not the same pair as xb, yb but still have a sol
+        :type xb: int
+        :type yb: int
+        :type x: int
+        :type y: int
+        """
+        try:
+            return self.sudoku.base[x, y] == 0 and self.sudoku.sols[x, y] != self.sudoku.sols[xb, yb]
         except KeyError:
             return False

@@ -10,7 +10,7 @@ from Core.Sudoku import Sudoku
 class TestNakedPairs(TestCase):
     def __init__(self, *args, **kwargs):
         super(TestNakedPairs, self).__init__(*args, **kwargs)
-        exnp = [[4, 0, 0, 0, 0, 0, 9, 3, 8],
+        ex1 = [[4, 0, 0, 0, 0, 0, 9, 3, 8],
                 [0, 3, 2, 0, 9, 4, 1, 0, 0],
                 [0, 9, 5, 3, 0, 0, 2, 4, 0],
                 [3, 7, 0, 6, 0, 9, 0, 0, 4],
@@ -19,17 +19,18 @@ class TestNakedPairs(TestCase):
                 [9, 5, 7, 0, 0, 8, 3, 0, 0],
                 [0, 0, 3, 9, 0, 0, 4, 0, 0],
                 [2, 4, 0, 0, 3, 0, 7, 0, 9]]
-        self.exnp = np.array(exnp)
+        self.ex1 = np.array(ex1)
 
         self.solvers = [NakedSingle, HiddenSingle, NakedPairs]
 
     def test_solve(self):
-        print(self.exnp)
-        sdk = Sudoku(self.exnp)
+        sdk = Sudoku(self.ex1)
         NakedSingle(sdk).solve()
+
         sol = sdk.sols.copy()
+        base = sdk.base.copy()
+
         master_solver(self.solvers, sdk)
+
         self.assertNotEqual(sol, sdk.sols)
-        self.assertEqual(sdk.sols[0, 3], {2, 5})
-        print(sdk.base)
-        print(sdk.sols)
+        self.assertEqual({2, 5}, sdk.sols[0, 3])
