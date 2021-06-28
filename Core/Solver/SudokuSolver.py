@@ -6,7 +6,7 @@ def master_solver(solvers, sudoku):
     """
     Solve the sudoku, with all the solvers provided, non-instanced
     :type solvers: list[type[SudokuSolver]]
-    :type sudoku: sdk.Sudoku
+    :type sudoku:
     """
     for solver in solvers:
         slv = solver(sudoku)
