@@ -44,6 +44,9 @@ class TestNakedPairs(TestCase):
 
         self.assertNotEqual(sol, sdk.sols)
         self.assertEqual({2, 5}, sdk.sols[0, 3])
+        self.assertEqual({8}, sdk.sols[2, 0])
+        self.assertEqual({2, 5}, sdk.sols[5, 4])
+        self.assertEqual({5, 6, 7}, sdk.sols[1, 8])
 
     def test_solve2(self):
         sdk = Sudoku(self.ex2)
@@ -55,3 +58,6 @@ class TestNakedPairs(TestCase):
 
         self.assertNotEqual(sol, sdk.sols)
         self.assertEqual({8, 9}, sdk.sols[7, 2])
+        self.assertEqual({1, 2, 4, 5}, sdk.sols[0, 3])
+        self.assertEqual({6, 8, 9}, sdk.sols[7, 5])
+        self.assertEqual({6, 8, 9}, sdk.sols[8, 5])
