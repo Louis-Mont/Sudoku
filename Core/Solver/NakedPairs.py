@@ -53,7 +53,7 @@ class NakedPairs(SudokuSolver):
             ax = x0 + x
             for y, c in enumerate(r):
                 ay = y0 + y
-                if xb != ax or yb != ay and self.valid_sol(xb, yb, ax, ay):
+                if (xb != ax or yb != ay) and self.valid_sol(xb, yb, ax, ay):
                     return ax, ay
         return False
 
