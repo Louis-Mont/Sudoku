@@ -20,7 +20,7 @@ class NakedPairs(SudokuSolver):
                         # False positive error
                         p = k(x, y)
                         if p:
-                            v(p)
+                            v(p[0], p[1])
 
     def h_pair(self, xb, yb):
         """
@@ -28,7 +28,7 @@ class NakedPairs(SudokuSolver):
         :type yb: int
         """
         for y, c in enumerate(self.sudoku.base[xb]):
-            if yb != y and len(self.sudoku.sols[xb, y]) == 2 and self.sudoku.sols[xb, y] == self.sudoku.sols[xb, yb]:
+            if yb != y and self.valid_sol(xb, yb, xb, y):
                 return xb, y
         return False
 
@@ -38,7 +38,7 @@ class NakedPairs(SudokuSolver):
         :type yb: int
         """
         for x, r in enumerate(self.sudoku.base[:, yb]):
-            if xb != x and len(self.sudoku.sols[x, yb]) == 2 and self.sudoku.sols[x, yb] == self.sudoku.sols[xb, yb]:
+            if xb != x and self.valid_sol(xb, yb, x, yb):
                 return x, yb
         return False
 
@@ -53,19 +53,18 @@ class NakedPairs(SudokuSolver):
             ax = x0 + x
             for y, c in enumerate(r):
                 ay = y0 + y
-                ls = len(self.sudoku.sols[ax, ay])
-                if xb != ax or yb != ay and ls == 2 and self.sudoku.sols[ax, ay] == self.sudoku.sols[xb, yb]:
+                if xb != ax or yb != ay and self.valid_sol(xb, yb, ax, ay):
                     return ax, ay
         return False
 
     def rm_h_pair(self, xb, yb):
         for y, c in enumerate(self.sudoku.base[xb]):
-            if yb != y:
+            if yb != y and self.sudoku.base[xb, y] == 0:
                 rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[xb, y])
 
     def rm_v_pair(self, xb, yb):
         for x, r in enumerate(self.sudoku.base[:, yb]):
-            if xb != x:
+            if xb != x and self.sudoku.base[x, yb] == 0:
                 rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[x, yb])
 
     def rm_sq_pair(self, xb, yb):
@@ -73,5 +72,18 @@ class NakedPairs(SudokuSolver):
         y0 = sq_o(yb)
         for x, r in enumerate(self.sudoku.base[x0:x0 + 3, y0:y0 + 3]):
             for y, c in enumerate(r):
-                if xb != x0 + x or yb != y0 + y and self.sudoku.base[x0 + x, y0 + y] == 0:
+                if (xb != x0 + x or yb != y0 + y) and self.sudoku.base[x0 + x, y0 + y] == 0:
                     rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[x0 + x, y0 + y])
+
+    def valid_sol(self, xb, yb, x, y):
+        """
+        Verifies if the case x, y have the same pair as xb, yb
+        :type xb: int
+        :type yb: int
+        :type x: int
+        :type y: int
+        """
+        try:
+            return len(self.sudoku.sols[x, y]) == 2 and self.sudoku.sols[x, y] == self.sudoku.sols[xb, yb]
+        except KeyError:
+            return False
