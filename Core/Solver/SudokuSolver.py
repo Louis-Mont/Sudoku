@@ -28,6 +28,9 @@ class SudokuSolver(ABC):
         return set(range(1, 10))
 
     def solve(self):
+        """
+        Solves the sudoku using the current solver
+        """
         sudoku = self.sudoku
         for x, r in enumerate(sudoku.base):
             for y, c in enumerate(r):
@@ -36,4 +39,10 @@ class SudokuSolver(ABC):
 
     @abstractmethod
     def _solve(self, x, y):
+        """
+        Called every time the function goes on a non resolved case when browsing the array
+        :param x,y: coords of the current case being browsed
+        :type x: int
+        :type y: int
+        """
         pass
