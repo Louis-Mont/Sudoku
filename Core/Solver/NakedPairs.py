@@ -58,16 +58,28 @@ class NakedPairs(SudokuSolver):
         return False
 
     def rm_h_pair(self, xb, yb):
+        """
+        :type xb: int
+        :type yb: int
+        """
         for y, c in enumerate(self.sudoku.base[xb]):
             if yb != y and self.sudoku.base[xb, y] == 0:
                 rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[xb, y])
 
     def rm_v_pair(self, xb, yb):
+        """
+        :type xb: int
+        :type yb: int
+        """
         for x, r in enumerate(self.sudoku.base[:, yb]):
             if xb != x and self.sudoku.base[x, yb] == 0:
                 rm_coll(self.sudoku.sols[xb, yb], self.sudoku.sols[x, yb])
 
     def rm_sq_pair(self, xb, yb):
+        """
+        :type xb: int
+        :type yb: int
+        """
         x0 = sq_o(xb)
         y0 = sq_o(yb)
         for x, r in enumerate(self.sudoku.base[x0:x0 + 3, y0:y0 + 3]):
