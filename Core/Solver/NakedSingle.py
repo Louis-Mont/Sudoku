@@ -7,12 +7,8 @@ class NakedSingle(SudokuSolver):
     def __init__(self, sudoku):
         super().__init__("Naked Single", sudoku)
 
-    def solve(self):
-        sudoku = self.sudoku
-        for x, r in enumerate(sudoku.base):
-            for y, c in enumerate(r):
-                if sudoku.base[x, y] == 0:
-                    sudoku.sols[x, y] = self.get_sol(x, y)
+    def _solve(self, x, y):
+        self.sudoku.sols[x, y] = self.get_sol(x, y)
 
     def h_sols(self, x):
         all_sol = self.get_poss()

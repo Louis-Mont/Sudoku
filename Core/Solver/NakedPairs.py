@@ -6,21 +6,17 @@ class NakedPairs(SudokuSolver):
     def __init__(self, sudoku):
         super().__init__("Naked Pairs", sudoku)
 
-    def solve(self):
-        sudoku = self.sudoku
-        for x, r in enumerate(sudoku.base):
-            for y, c in enumerate(r):
-                if sudoku.base[x, y] == 0:
-                    pairs = [
-                        (self.h_pair(x, y), self.rm_h_pair),
-                        (self.v_pair(x, y), self.rm_v_pair),
-                        (self.sq_pair(x, y), self.rm_sq_pair)
-                    ]
-                    for pair_v in pairs:
-                        pair = pair_v[0]
-                        # False positive error
-                        if pair:
-                            pair_v[1](pair[0], pair[1])
+    def _solve(self, x, y):
+        pairs = [
+            (self.h_pair(x, y), self.rm_h_pair),
+            (self.v_pair(x, y), self.rm_v_pair),
+            (self.sq_pair(x, y), self.rm_sq_pair)
+        ]
+        for pair_v in pairs:
+            pair = pair_v[0]
+            # False positive error
+            if pair:
+                pair_v[1](pair[0], pair[1])
 
     def h_pair(self, xb, yb):
         """

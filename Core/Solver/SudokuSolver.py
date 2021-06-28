@@ -42,6 +42,13 @@ class SudokuSolver(ABC):
             tryremove(lp, self.sudoku.base[x, y])
         return lp
 
-    @abstractmethod
     def solve(self):
+        sudoku = self.sudoku
+        for x, r in enumerate(sudoku.base):
+            for y, c in enumerate(r):
+                if sudoku.base[x, y] == 0:
+                    self._solve(x, y)
+
+    @abstractmethod
+    def _solve(self, x, y):
         pass

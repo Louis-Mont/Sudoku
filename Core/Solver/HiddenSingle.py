@@ -6,15 +6,11 @@ class HiddenSingle(SudokuSolver):
     def __init__(self, sudoku):
         super().__init__("Hidden Single", sudoku)
 
-    def solve(self):
-        sudoku = self.sudoku
-        for x, r in enumerate(sudoku.base):
-            for y, c in enumerate(r):
-                if sudoku.base[x, y] == 0:
-                    for s in [self.h_poss(x, y), self.v_poss(x, y), self.sq_poss(x, y)]:
-                        if len(s) == 1:
-                            self.sudoku.sols[x, y] = s
-                            break
+    def _solve(self, x, y):
+        for s in [self.h_poss(x, y), self.v_poss(x, y), self.sq_poss(x, y)]:
+            if len(s) == 1:
+                self.sudoku.sols[x, y] = s
+                break
 
     def h_poss(self, xb, yb):
         case_poss = self.sudoku.sols[xb, yb].copy()
