@@ -25,5 +25,4 @@ class TestHiddenSingle(TestCase):
     def test_ex1(self):
         base = self.ex1.copy()
         master_solver(self.solvers, Sudoku(self.ex1))
-        # Does not work
-        self.assertNotEqual(base.all(), self.ex1.all())
+        self.assertFalse((base == self.ex1).all())
