@@ -35,9 +35,9 @@ class Sudoku:
                         ns = NakedSingle(self)
                         sq_sol = ns.sq_sol(x, y)
                         # Solutions globale communes col/row/box
-                        avb = np.intersect1d(cr_sol, np.array(list(sq_sol)))
+                        all_sol = np.intersect1d(cr_sol, np.array(list(sq_sol)))
                         # Choix random parmi solutions possibles gloable
-                        self.base[x, y] = np.random.choice(avb, size=1)
+                        self.base[x, y] = np.random.choice(all_sol, size=1)
                 break
             except ValueError:
                 pass
