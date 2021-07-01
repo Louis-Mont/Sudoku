@@ -1,6 +1,3 @@
 {
-    "python.pythonPath": "D:\\Users\\erwan\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
-    "files.watcherExclude": {
-        "**/target": true
-    }
+    "python.pythonPath": "D:\\Users\\erwan\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
 }

@@ -11,3 +11,13 @@ def tryremove(c, v):
         # TODO : Not Good Sudoku
         pass
     return c
+
+
+def rm_coll(r_items, items):
+    """
+    :param r_items: the items you want to be removed from the list
+    :param items: the list where the items are removed
+    """
+    for i in r_items:
+        tryremove(items, i)
+    return items

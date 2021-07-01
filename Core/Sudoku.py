@@ -77,6 +77,9 @@ class Sudoku:
         return is_valid
 
     def formating_sudoku(self, fc):
+        n = 9
+        # Initialiser une grille vide
+        self.base = np.zeros((n, n), np.int)
         x = 0
         y = 0
         for car in fc:
@@ -94,3 +97,14 @@ class Sudoku:
                     y += 1
                 else:
                     continue
+    
+    def print_sudoku(self):
+        print("-"*37)
+        for i, row in enumerate(self.base):
+            print(("|" + " {}   {}   {} |"*3).format(*[x if x != 0 else " " for x in row]))
+            if i == 8:
+                print("-"*37)
+            elif i % 3 == 2:
+                print("|" + "---+"*8 + "---|")
+            else:
+                print("|" + "   +"*8 + "   |")
