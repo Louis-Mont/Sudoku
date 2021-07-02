@@ -5,6 +5,8 @@ from Core.Solver.NakedSingle import NakedSingle
 from Core.Solver.HiddenSingle import HiddenSingle
 from Core.Solver.PointingPairs import PointingPairs
 from tests.test_PointingPairs import TestPointingPairs
+from Core.Solver.BoxLineReduction import BoxLineReduction
+from tests.test_BoxLineReduction import TestBoxLineReduction
 
 if __name__ == '__main__':
     """
@@ -43,6 +45,7 @@ if __name__ == '__main__':
     print()
     """
 
-    test = TestPointingPairs()
-    test.test_solve()
-    #test.test_solve2()
+    testPP = TestPointingPairs()
+    testPP.test_solve()
+    testBLR = TestBoxLineReduction()
+    testBLR.test_solve()
