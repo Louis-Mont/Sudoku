@@ -14,7 +14,6 @@ class NakedPairs(SudokuSolver):
         ]
         for pair_v in pairs:
             pair = pair_v[0]
-            # False positive error
             if pair:
                 pair_v[1](pair[0], pair[1])
 
