@@ -1,5 +1,15 @@
 import tkinter as tk
 import tkinter.messagebox
+import numpy as np
+from Core.Sudoku import Sudoku
+from Core.Solver.SudokuSolver import master_solver
+from Core.Solver.BoxLineReduction import BoxLineReduction
+from Core.Solver.HiddenSingle import HiddenSingle
+from Core.Solver.HiddenPairs import HiddenPairs
+from Core.Solver.NakedPairs import NakedPairs
+from Core.Solver.NakedSingle import NakedSingle
+from Core.Solver.NakedTriples import NakedTriples
+from Core.Solver.PointingPairs import PointingPairs
 
 win = tk.Tk()
 win.resizable(False, False)
@@ -592,9 +602,33 @@ def clear_list_sp():
 
 def solve_sudoku():
     global number_list
-    if engine_solver.check_correct(number_list) != 0:
-        engine_solver.solve(number_list)
-    else:
+    """number_list = [[2, 0, 0, 0, 7, 0, 0, 3, 8],
+                   [0, 0, 0, 0, 0, 6, 0, 7, 0],
+                   [3, 0, 0, 0, 4, 0, 6, 0, 0],
+                   [0, 0, 8, 0, 2, 0, 7, 0, 0],
+                   [1, 0, 0, 0, 0, 0, 0, 0, 6],
+                   [0, 0, 7, 0, 3, 0, 4, 0, 0],
+                   [0, 0, 4, 0, 8, 0, 0, 0, 9],
+                   [0, 6, 0, 4, 0, 0, 0, 0, 0],
+                   [9, 1, 0, 0, 6, 0, 0, 0, 2]]"""
+    number_list = [[0, 7, 0, 4, 0, 8, 0, 2, 9],
+                   [0, 0, 2, 0, 0, 0, 0, 0, 4],
+                   [8, 5, 4, 0, 2, 0, 0, 0, 7],
+                   [0, 0, 8, 3, 7, 4, 2, 0, 0],
+                   [0, 2, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 3, 2, 6, 1, 7, 0, 0],
+                   [0, 0, 0, 0, 9, 3, 6, 1, 2],
+                   [2, 0, 0, 0, 0, 0, 4, 0, 3],
+                   [1, 3, 0, 6, 4, 2, 0, 7, 0]]
+    sdk = Sudoku(np.array(number_list))
+    if sdk.is_sudoku_valid():
+        step = 0
+        while not sdk.is_sudoku_complete() and step < 200:
+            solvers = [NakedSingle, NakedPairs, NakedTriples, PointingPairs, BoxLineReduction]
+            master_solver(solvers, sdk)
+            number_list = sdk.base
+            step += 1
+    if not sdk.is_sudoku_valid():
         tkinter.messagebox.showerror('ERREUR', "Il y a une erreur dans votre Sudoku")
     display_numbers()
 
@@ -606,7 +640,7 @@ def exit():
 OptionList = ["Méthode 1 ", "méthode 2", "méthode 3"]
 
 button_choice = tk.OptionMenu(win, OptionList[0], *OptionList)
-button_solve = tk.Button(win, text='Résoudre le Sudoku', command=solve_sudoku)
+button_solve = tk.Button(win, text='Résoudre le Sudoku', command=lambda: solve_sudoku())
 button_clear_all = tk.Button(win, text='Vider le Sudoku', command=clear_list_all)
 button_clear = tk.Button(win, text='Effacer la case', command=clear_list_sp)
 c1 = tk.Checkbutton(win, text='solver1', onvalue=1, offvalue=0, command=clear_list_sp)
@@ -614,7 +648,6 @@ c2 = tk.Checkbutton(win, text='solver2', onvalue=1, offvalue=0, command=clear_li
 c3 = tk.Checkbutton(win, text='solver3', onvalue=1, offvalue=0, command=clear_list_sp)
 c4 = tk.Checkbutton(win, text='solver4', onvalue=1, offvalue=0, command=clear_list_sp)
 c5 = tk.Checkbutton(win, text='solver5', onvalue=1, offvalue=0, command=clear_list_sp)
-
 
 button_solve.grid(row=4, column=0)
 button_clear_all.grid(row=4, column=1)
@@ -624,7 +657,6 @@ c2.grid(row=1, column=3)
 c3.grid(row=2, column=3)
 c4.grid(row=3, column=3)
 c5.grid(row=4, column=3)
-
 
 menu_file = tk.Menu(win)
 edit_bar = tk.Menu(menu_file, tearoff=False)

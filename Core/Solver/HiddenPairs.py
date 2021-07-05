@@ -68,11 +68,17 @@ class HiddenPairs(SudokuSolver):
         :type orientation: (int,int,set) -> [int,bool]
         """
         sols: dict[tuple, set] = self.sudoku.sols
-        cmn = sols[xb, yb].intersection(sols[x, y])
+        try:
+            cmn = sols[xb, yb].intersection(sols[x, y])
+        except KeyError:
+            return False
         if len(cmn) >= 2:
             cmn = list(cmn)
             for i, s in enumerate(cmn):
-                pair = {cmn[i], cmn[i + 1]}
+                try:
+                    pair = {cmn[i], cmn[i + 1]}
+                except IndexError:
+                    return False
                 isalone = orientation(xb, yb, pair)
                 if isalone:
                     return pair
@@ -152,5 +158,8 @@ class HiddenPairs(SudokuSolver):
         :type pair: set
         """
         sols: dict[tuple, set] = self.sudoku.sols
-        if pair.issubset(sols[x, y]):
-            sols[x, y] = pair
+        try:
+            if pair.issubset(sols[x, y]):
+                sols[x, y] = pair
+        except KeyError:
+            pass
