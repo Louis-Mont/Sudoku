@@ -666,6 +666,9 @@ edit_bar.add_command(label='Résoudre le Sudoku', command=solve_sudoku)
 edit_bar.add_command(label='Quitter', command=exit)
 menu_file.add_cascade(label='Options', menu=edit_bar)
 
+for c in [c1, c2, c3, c4, c5]:
+    c.grid_forget()
+
 display_numbers()
 win.config(menu=menu_file)
 win.mainloop()
